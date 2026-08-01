@@ -1,0 +1,17 @@
+{
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "node esbuild.config.mjs",
+    "test": "npm run prettier -- --check",
+    "prettier": "prettier ."
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.1",
+    "prettier": "^3.9.6"
+  },
+  "dependencies": {
+    "mithril": "^2.3.8",
+    "qunit": "^2.26.0",
+    "sinon": "^22.1.0"
+  }
+}

@@ -1,0 +1,13 @@
+# Neutralinojs binaries and builds
+/bin/neutralino-*
+/dist
+
+# Neutralinojs related files
+.tmp
+.storage
+*.log
+
+# ESBuild stuff
+/resources/assets
+/node_modules
+meta.json
