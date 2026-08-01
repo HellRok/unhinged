@@ -1,0 +1,2 @@
+web: npm run dev
+assets: watchexec --restart --exts rb,css,js,mjs --watch app -- npm run build

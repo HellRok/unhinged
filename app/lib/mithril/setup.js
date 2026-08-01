@@ -1,0 +1,4 @@
+import m from "mithril";
+
+window.m = m;
+window.m_route = m.route;

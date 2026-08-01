@@ -1,4 +1,4 @@
-Component.define(:Counter) do
+Mithril::Component.define(:Counter) do
   oninit do
     state[:count] = 0
   end

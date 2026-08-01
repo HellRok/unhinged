@@ -24,12 +24,14 @@ const options = {
   },
   external: ["node_modules/*"],
   plugins: [
-    opalrbPlugin({ extraArgs: ["--include", "./app"] }),
+    opalrbPlugin({ extraArgs: [
+      "--include", "./app",
+    ] }),
   ],
   metafile: true,
 };
 
-if (process.argv.indexOf("--serve")) {
+if (process.argv.indexOf("--serve") >= 0) {
   esbuild.context({
     entryPoints: ["app/app.rb", "app/index.html"],
     outdir: "dist",
@@ -43,7 +45,7 @@ if (process.argv.indexOf("--serve")) {
 } else {
   esbuild
     .build({
-      entryPoints: ["app/app.rb"],
+      entryPoints: ["app/app.rb", "app/index.html"],
       outdir: "dist",
       ...options,
     })

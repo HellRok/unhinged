@@ -1,16 +1,16 @@
-Component.define(:Home) do
+Mithril::Component.define(:Home) do
   view do
-    div(class: "columns") {
-      div(class: "column") { Counter() }
-      div(class: "column") { Counter() }
-    }
+    # div(class: "columns") {
+    #   div(class: "column") { Counter() }
+    #   div(class: "column") { Counter() }
+    # }
 
-    BulmaPanel {
-      BulmaHeading { plain "Controls" }
-      BulmaBlock { plain "Block 1" }
-      BulmaBlock { plain "Block 2" }
-      BulmaBlock { plain "Block 3" }
-    }
+    # BulmaPanel {
+    #   BulmaHeading { plain "Controls" }
+    #   BulmaBlock { plain "Block 1" }
+    #   BulmaBlock { plain "Block 2" }
+    #   BulmaBlock { plain "Block 3" }
+    # }
 
     div(class: "content") {
       h1 { "Example Page" }

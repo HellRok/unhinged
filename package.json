@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "node esbuild.config.mjs",
+    "dev": "esbuild --servedir=dist",
     "build": "node esbuild.config.mjs",
     "test": "npm run prettier -- --check",
     "prettier": "prettier ."
