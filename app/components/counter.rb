@@ -4,19 +4,19 @@ Mithril::Component.define(:Counter) do
   end
 
   view do
-    div(class: "card") {
-      header(class: "card-header") {
+    BulmaCard {
+      BulmaCardHeader {
         p(class: "card-header-title") {
           plain "Counter"
         }
       }
-      div(class: "card-content") {
+      BulmaCardContent {
         div(class: "block") {
           plain "Current count: #{state[:count]}"
         }
       }
 
-      div(class: "card-footer") {
+      BulmaCardFooter {
         a(
           class: "card-footer-item",
           onclick: -> { state[:count] -= 1 },
