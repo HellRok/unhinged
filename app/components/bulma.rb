@@ -40,3 +40,15 @@ Mithril::Component.define(:BulmaCardFooter) do
     div(class: "card-footer #{attrs[:class]}") { children }
   end
 end
+
+Mithril::Component.define(:BulmaSkeleton) do
+  view do
+    div(class: "skeleton-block #{attrs[:class]}") { children }
+  end
+end
+
+Mithril::Component.define(:BulmaBox) do
+  view do
+    div(class: "box #{attrs[:class]}") { children }
+  end
+end

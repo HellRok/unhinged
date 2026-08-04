@@ -4,20 +4,21 @@ module Mithril
 
     # Taken from https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements
     TAGS = %w[
-    a abbr address area article aside audio b base bdi bdo blockquote body br
-    button canvas caption cite code col colgroup data datalist dd del details dfn
-    dialog div dl dt em embed fencedframe fieldset figcaption figure footer form
-    geolocation h1 head header hgroup hr html i iframe img input ins kbd label
-    legend li link main map mark math menu meta meter nav noscript object ol
-    optgroup option output p picture pre progress q rp rt ruby s samp script search
-    section select selectedcontent slot small source span strong style sub summary
-    sup svg table tbody td template textarea tfoot th thead time title tr track u
-    ul var video wbr
+      a abbr address area article aside audio b base bdi bdo blockquote body br
+      button canvas caption cite code col colgroup data datalist dd del details dfn
+      dialog div dl dt em embed fencedframe fieldset figcaption figure footer form
+      geolocation h1 head header hgroup hr html i iframe img input ins kbd label
+      legend li link main map mark math menu meta meter nav noscript object ol
+      optgroup option output p picture pre progress q rp rt ruby s samp script search
+      section select selectedcontent slot small source span strong style sub summary
+      sup svg table tbody td template textarea tfoot th thead time title tr track u
+      ul var video wbr
     ]
 
-    def initialize(&block)
+    def initialize(component, &block)
       @output = []
       @block = block
+      @component = component
     end
 
     def call(vnode)
@@ -36,7 +37,7 @@ module Mithril
 
     def tag(tag, opts, &block)
       m(tag, opts) {
-        HtmlRenderer.new(&block).call(@native_vnode) if block_given?
+        HtmlRenderer.new(@component, &block).call(@native_vnode) if block_given?
       }
     end
 
@@ -54,6 +55,10 @@ module Mithril
 
     def plain(text)
       @output << text
+    end
+
+    def method_missing(m, *args, &block)
+      @component.send(m, *args, *block)
     end
   end
 end

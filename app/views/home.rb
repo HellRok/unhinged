@@ -5,6 +5,8 @@ Mithril::Component.define(:Home) do
       div(class: "column") { Counter() }
     }
 
+    DataLoadingExample()
+
     BulmaPanel {
       BulmaPanelHeading(class: "has-text-centered p-2") { plain "Controls" }
       BulmaPanelBlock { plain "Block 1" }

@@ -15,11 +15,11 @@ module Mithril
     end
 
     %w[oninit
-    oncreate
-    onupdate
-    onbeforeremove
-    onremove
-    onbeforeupdate].each do |method|
+      oncreate
+      onupdate
+      onbeforeremove
+      onremove
+      onbeforeupdate].each do |method|
       define_method method do |&block|
         @component[method] = ->(native_vnode) {
           @native_vnode = native_vnode
@@ -31,7 +31,7 @@ module Mithril
     def view(&block)
       @component[:view] = ->(native_vnode) {
         @native_vnode = native_vnode
-        HtmlRenderer.new(&block).call(native_vnode)
+        HtmlRenderer.new(self, &block).call(native_vnode)
       }
     end
   end
