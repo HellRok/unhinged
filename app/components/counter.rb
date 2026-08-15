@@ -19,19 +19,28 @@ Mithril::Component.define(:Counter) do
       BulmaCardFooter {
         a(
           class: "card-footer-item",
-          onclick: -> { state[:count] -= 1 },
+          onclick: ->(e) {
+            e.JS.preventDefault
+            state[:count] -= 1
+          },
           href: "#"
         ) { plain "-" }
 
         a(
           class: "card-footer-item",
-          onclick: -> { state[:count] = 0 },
+          onclick: ->(e) {
+            e.JS.preventDefault
+            state[:count] = 0
+          },
           href: "#"
         ) { plain "Reset" }
 
         a(
           class: "card-footer-item",
-          onclick: -> { state[:count] += 1 },
+          onclick: ->(e) {
+            e.JS.preventDefault
+            state[:count] += 1
+          },
           href: "#"
         ) { plain "+" }
       }

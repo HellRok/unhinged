@@ -23,8 +23,20 @@ module Mithril
 
     def call(vnode)
       @native_vnode = vnode
-      instance_exec(&@block)
+      call_wrapper
       @output.to_n
+    end
+
+    def call_wrapper
+      # This lets us use `return` in the blocks and have it react in a sensible way
+      # The try catch is due to this bug: https://github.com/opal/opal/issues/2608
+      %x[
+        try { #{instance_exec(&@block)} } catch (e) {
+          if (e.$thrower_type !== "return") {
+            throw e;
+          }
+        }
+      ]
     end
 
     def children
@@ -32,7 +44,23 @@ module Mithril
     end
 
     def m(tag, opts = {}, &block)
-      @output << $$.m(tag, opts, block.call).to_n
+      if tag.is_a?(String)
+        flattened_opts = opts.each_with_object({}) do |(key, value), result|
+          if value.is_a?(Hash) && key != :style
+            value.each do |val_key, val_value|
+              result["#{key}-#{val_key}"] = val_value
+            end
+
+          else
+            result[key] = value
+          end
+        end
+
+        @output << $$.m(tag, flattened_opts, block.call).to_n
+
+      else
+        @output << $$.m(tag, opts, block.call).to_n
+      end
     end
 
     def tag(tag, opts, &block)

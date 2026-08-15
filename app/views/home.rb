@@ -1,38 +1,12 @@
 Mithril::Component.define(:Home) do
   view do
-    div(class: "columns") {
-      div(class: "column") { Counter() }
-      div(class: "column") { Counter() }
-    }
+    NavLinks()
 
-    DataLoadingExample()
-
-    BulmaPanel {
-      BulmaPanelHeading(class: "has-text-centered p-2") { plain "Controls" }
-      BulmaPanelBlock { plain "Block 1" }
-      BulmaPanelBlock { plain "Block 2" }
-      BulmaPanelBlock { plain "Block 3" }
-    }
-
-    BulmaCard {
-      BulmaCardContent(class: "content") {
-        h1 { plain "Example Content" }
-        p { plain "This is a paragraph demonstrating basic text." }
-
-        ul {
-          li { plain "List item one" }
-          li { plain "List item two" }
-          li { plain "List item three" }
-        }
-
-        p {
-          plain "Visit our site: "
-          a(href: "https://example.com") { plain "Example Link" }
-        }
-
-        p { plain "Image:" }
-        img(src: "https://picsum.photos/500/300", alt: "A description")
-      }
-    }
+    section(class: "hero is-info") do
+      div(class: "hero-body") do
+        p(class: "title") { plain "Opal Mithril" }
+        p(class: "subtitle") { plain "My unhinged frontend experiment" }
+      end
+    end
   end
 end
