@@ -10,5 +10,5 @@ Gem::Specification.new do |gem|
 
   gem.license = "MIT"
 
-  gem.add_runtime_dependency 'opal'
+  gem.add_dependency 'opal'
 end
