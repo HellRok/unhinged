@@ -1,5 +1,5 @@
 Gem::Specification.new do |gem|
-  gem.name = "opal-mithril"
+  gem.name = "unhinged"
   gem.version = "0.0.1"
   gem.summary = "Configure Mithril to work in Opal"
   gem.authors = ["Sean Earle"]

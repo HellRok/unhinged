@@ -1,16 +1,34 @@
 {
+  "name": "unhinged",
+  "version": "0.0.1",
+  "description": "My unhinged frontend framework using OpalRB + Mithril",
+  "homepage": "https://github.com/HellRok/unhinged#readme",
+  "bugs": {
+    "url": "https://github.com/HellRok/unhinged/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HellRok/unhinged.git"
+  },
+  "license": "MIT",
+  "author": "Sean Earle",
+  "type": "module",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
   "scripts": {
     "dev": "esbuild --servedir=dist",
     "build": "node esbuild.config.mjs",
     "test": "npm run prettier -- --check",
     "prettier": "prettier ."
   },
+  "dependencies": {
+    "mithril": "^2.3.8"
+  },
   "devDependencies": {
     "esbuild": "^0.28.1",
-    "prettier": "^3.9.6"
-  },
-  "dependencies": {
-    "mithril": "^2.3.8",
+    "prettier": "^3.9.6",
     "qunit": "^2.26.0",
     "sinon": "^22.1.0"
   }
