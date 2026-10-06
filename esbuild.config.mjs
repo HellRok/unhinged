@@ -23,25 +23,22 @@ const options = {
     "process.env.NODE_ENV": `"${environment}"`,
   },
   external: ["node_modules/*"],
-  plugins: [
-    opalrbPlugin({ extraArgs: [
-      "--include", "./app",
-    ] }),
-  ],
+  plugins: [opalrbPlugin({ extraArgs: ["--include", "./app"] })],
   metafile: true,
 };
 
 if (process.argv.indexOf("--serve") >= 0) {
-  esbuild.context({
-    entryPoints: ["app/app.rb", "app/index.html"],
-    outdir: "dist",
-    inject: ["lib/live-reload.js"],
-    ...options,
-  }).then(async (context) => {
-    await context.watch();
-    await context.serve({ servedir: "dist" })
-  });
-
+  esbuild
+    .context({
+      entryPoints: ["app/app.rb", "app/index.html"],
+      outdir: "dist",
+      inject: ["lib/live-reload.js"],
+      ...options,
+    })
+    .then(async (context) => {
+      await context.watch();
+      await context.serve({ servedir: "dist" });
+    });
 } else {
   esbuild
     .build({

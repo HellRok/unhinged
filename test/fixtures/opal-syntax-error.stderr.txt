@@ -1,0 +1,12 @@
+test/fixtures/broken.rb:4:10: fatal: unterminated string meets end of file
+test/fixtures/broken.rb:4:     puts "Hello
+test/fixtures/broken.rb:4:          ^     
+bundler: failed to load command: opal (/home/sean/.asdf/installs/ruby/4.0.6/bin/opal)
+test/fixtures/broken.rb:4:in `    puts "Hello': unterminated string meets end of file (Opal::SyntaxError)
+	from /home/sean/.asdf/installs/ruby/4.0.6/lib/ruby/gems/4.0.0/gems/parser-3.3.12.0/lib/parser/diagnostic/engine.rb:72:in 'Parser::Diagnostic::Engine#process'
+	from /home/sean/.asdf/installs/ruby/4.0.6/lib/ruby/gems/4.0.0/gems/parser-3.3.12.0/lib/parser/lexer-F1.rb:14726:in 'Parser::Lexer#diagnostic'
+	from /home/sean/.asdf/installs/ruby/4.0.6/lib/ruby/gems/4.0.0/gems/parser-3.3.12.0/lib/parser/lexer-strings.rb:5133:in 'Parser::LexerStrings#diagnostic'
+	from /home/sean/.asdf/installs/ruby/4.0.6/lib/ruby/gems/4.0.0/gems/parser-3.3.12.0/lib/parser/lexer-strings.rb:5236:in 'Parser::LexerStrings#extend_string_eol_check_eof'
+	from /home/sean/.asdf/installs/ruby/4.0.6/lib/ruby/gems/4.0.0/gems/parser-3.3.12.0/lib/parser/lexer-strings.rb:3782:in 'Parser::LexerStrings#advance'
+	from /home/sean/.asdf/installs/ruby/4.0.6/lib/ruby/gems/4.0.0/gems/parser-3.3.12.0/lib/parser/lexer-F1.rb:11378:in 'Parser::Lexer#advance'
+	from /home/sean/.asdf/installs/ruby/4.0.6/lib/ruby/gems/4.0.0/gems/parser-3.3.12.0/lib/parser/base.rb:255:in 'Parser::Base#next_token'
