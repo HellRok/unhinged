@@ -8,5 +8,9 @@ Mithril::Component.define(:Home) do
         p(class: "subtitle") { plain "My unhinged frontend experiment" }
       end
     end
+
+    tag($$["Thing"]) do
+      tag($$["Beep::Blah"])
+    end
   end
 end

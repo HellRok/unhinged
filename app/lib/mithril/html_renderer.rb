@@ -1,7 +1,5 @@
 module Mithril
   class HtmlRenderer
-    include Vnode
-
     # Taken from https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements
     TAGS = %w[
       a abbr address area article aside audio b base bdi bdo blockquote body br
@@ -19,10 +17,18 @@ module Mithril
       @output = []
       @block = block
       @component = component
+
+      puts "----"
+      puts @component.instance_variables.join(", ")
+
+      @component.instance_variables.each do |ivar|
+        puts ivar
+        puts "Overriding '#{ivar}'" if instance_variable_defined?(ivar)
+        instance_variable_set(ivar, @component.instance_variable_get(ivar))
+      end
     end
 
-    def call(vnode)
-      @native_vnode = vnode
+    def call
       call_wrapper
       @output.to_n
     end
@@ -40,7 +46,7 @@ module Mithril
     end
 
     def children
-      @output.concat([`#{@native_vnode}.children`])
+      @output.concat([`#{native_vnode}.children`])
     end
 
     def m(tag, opts = {}, &block)
@@ -65,7 +71,7 @@ module Mithril
 
     def tag(tag, opts, &block)
       m(tag, opts) {
-        HtmlRenderer.new(@component, &block).call(@native_vnode) if block_given?
+        HtmlRenderer.new(@component, &block).call if block_given?
       }
     end
 

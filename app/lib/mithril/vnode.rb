@@ -14,8 +14,11 @@ module Mithril
       end
     end
 
-    def vnode
-      Hash.new(@native_vnode)
+    attr_reader :vnode, :native_vnode
+
+    def vnode=(val)
+      @native_vnode = val
+      @vnode = Hash.new(val)
     end
 
     def attrs
