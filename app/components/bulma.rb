@@ -1,54 +1,92 @@
-Mithril::Component.define(:BulmaPanel) do
-  view do
-    type = attrs.fetch(:type, "is-primary")
-    nav(class: "panel #{type} #{attrs[:class]}") { children }
-  end
-end
+module Bulma
+  class Panel
+    include Mithril::Component
 
-Mithril::Component.define(:BulmaPanelHeading) do
-  view do
-    p(class: "panel-heading #{attrs[:class]}") { children }
-  end
-end
+    def view
+      html do
+        type = attrs.fetch(:type, "is-primary")
+        nav(class: "panel #{type} #{attrs[:class]}") { children }
+      end
+    end
 
-Mithril::Component.define(:BulmaPanelBlock) do
-  view do
-    div(class: "panel-block #{attrs[:class]}") { children }
-  end
-end
+    class Heading
+      include Mithril::Component
 
-Mithril::Component.define(:BulmaCard) do
-  view do
-    nav(class: "card #{attrs[:class]}") { children }
-  end
-end
+      def view
+        html do
+          p(class: "panel-heading #{attrs[:class]}") { children }
+        end
+      end
+    end
 
-Mithril::Component.define(:BulmaCardHeader) do
-  view do
-    header(class: "card-header #{attrs[:class]}") { children }
-  end
-end
+    class Block
+      include Mithril::Component
 
-Mithril::Component.define(:BulmaCardContent) do
-  view do
-    div(class: "card-content #{attrs[:class]}") { children }
+      def view
+        html do
+          div(class: "panel-block #{attrs[:class]}") { children }
+        end
+      end
+    end
   end
-end
 
-Mithril::Component.define(:BulmaCardFooter) do
-  view do
-    div(class: "card-footer #{attrs[:class]}") { children }
+  class Card
+    include Mithril::Component
+
+    def view
+      html do
+        nav(class: "card #{attrs[:class]}") { children }
+      end
+    end
+
+    class Header
+      include Mithril::Component
+
+      def view
+        html do
+          header(class: "card-header #{attrs[:class]}") { children }
+        end
+      end
+    end
+
+    class Content
+      include Mithril::Component
+
+      def view
+        html do
+          div(class: "card-content #{attrs[:class]}") { children }
+        end
+      end
+    end
+
+    class Footer
+      include Mithril::Component
+
+      def view
+        html do
+          div(class: "card-footer #{attrs[:class]}") { children }
+        end
+      end
+    end
   end
-end
 
-Mithril::Component.define(:BulmaSkeleton) do
-  view do
-    div(class: "skeleton-block #{attrs[:class]}") { children }
+  class Skeleton
+    include Mithril::Component
+
+    def view
+      html do
+        div(class: "skeleton-block #{attrs[:class]}") { children }
+      end
+    end
   end
-end
 
-Mithril::Component.define(:BulmaBox) do
-  view do
-    div(class: "box #{attrs[:class]}") { children }
+  class Box
+    include Mithril::Component
+
+    def view
+      html do
+        div(class: "box #{attrs[:class]}") { children }
+      end
+    end
   end
 end

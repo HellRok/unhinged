@@ -4,7 +4,6 @@ require "lib/mithril"
 
 require "components/bulma"
 require "components/counter"
-require "components/data_loading_example"
 require "components/nav_links"
 
 require "views/home"

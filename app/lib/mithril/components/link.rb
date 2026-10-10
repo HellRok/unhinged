@@ -1,2 +1,2 @@
 $$[:Link] = $$.m_route_Link
-Mithril::HtmlRenderer.register(:Link)
+#Mithril::HtmlRenderer.register(:Link)

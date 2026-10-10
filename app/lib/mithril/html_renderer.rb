@@ -18,12 +18,7 @@ module Mithril
       @block = block
       @component = component
 
-      puts "----"
-      puts @component.instance_variables.join(", ")
-
       @component.instance_variables.each do |ivar|
-        puts ivar
-        puts "Overriding '#{ivar}'" if instance_variable_defined?(ivar)
         instance_variable_set(ivar, @component.instance_variable_get(ivar))
       end
     end
@@ -51,6 +46,7 @@ module Mithril
 
     def m(tag, opts = {}, &block)
       if tag.is_a?(String)
+        puts "  - string"
         flattened_opts = opts.each_with_object({}) do |(key, value), result|
           if value.is_a?(Hash) && key != :style
             value.each do |val_key, val_value|
@@ -65,6 +61,7 @@ module Mithril
         @output << $$.m(tag, flattened_opts, block.call).to_n
 
       else
+        puts "  - tag"
         @output << $$.m(tag, opts, block.call).to_n
       end
     end
@@ -75,17 +72,16 @@ module Mithril
       }
     end
 
-    def self.register(klass)
-      define_method klass do |opts = {}, &block|
-        tag($$[klass], opts, &block)
-      end
-    end
-
     TAGS.each { |elem|
       define_method elem do |opts = {}, &block|
         tag(elem, opts, &block)
       end
     }
+
+    def render(klass, opts={}, &block)
+      puts "render #{klass}"
+      tag($$[klass.name], opts, &block)
+    end
 
     def plain(text)
       @output << text

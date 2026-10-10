@@ -1,12 +1,16 @@
-Mithril::Component.define(:Counters) do
-  view do
-    NavLinks()
+class Counters
+  include Mithril::Component
 
-    div(class: "columns") {
-      div(class: "column") { Counter() }
-      div(class: "column") { Counter() }
-      div(class: "column") { Counter() }
-      div(class: "column") { Counter() }
-    }
+  def view
+    html do
+      render Nav
+
+      div(class: "columns") {
+        div(class: "column") { render Counter }
+        div(class: "column") { render Counter }
+        div(class: "column") { render Counter }
+        div(class: "column") { render Counter }
+      }
+    end
   end
 end

@@ -3,8 +3,8 @@ if RUBY_ENGINE == "opal"
 
   require_relative "mithril/vnode"
 
-  require_relative "mithril/component"
   require_relative "mithril/html_renderer"
+  require_relative "mithril/component"
 
   require_relative "mithril/components/link"
 

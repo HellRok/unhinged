@@ -1,16 +1,16 @@
-Mithril::Component.define(:Home) do
-  view do
-    NavLinks()
+class Home
+  include Mithril::Component
 
-    section(class: "hero is-info") do
-      div(class: "hero-body") do
-        p(class: "title") { plain "Opal Mithril" }
-        p(class: "subtitle") { plain "My unhinged frontend experiment" }
+  def view
+    html do
+      render Nav
+
+      section(class: "hero is-info") do
+        div(class: "hero-body") do
+          p(class: "title") { plain "Opal Mithril" }
+          p(class: "subtitle") { plain "My unhinged frontend experiment" }
+        end
       end
-    end
-
-    tag($$["Thing"]) do
-      tag($$["Beep::Blah"])
     end
   end
 end
