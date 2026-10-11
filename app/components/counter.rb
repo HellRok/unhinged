@@ -1,7 +1,8 @@
 class Counter
   include Mithril::Component
 
-  def initialize
+  def initialize(vnode)
+    super
     @count = 0
   end
 

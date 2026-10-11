@@ -1,7 +1,8 @@
 class Loading
   include Mithril::Component
 
-  def initialize
+  def initialize(vnode)
+    super
     @loading = true
     fetch_data
   end

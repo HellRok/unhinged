@@ -28,9 +28,11 @@
 module Mithril
   module Component
     include Mithril::Vnode
+    include Mithril::HtmlRenderer
 
     def initialize(vnode)
       self.vnode = vnode
+      @output = []
     end
 
     def create = puts "create"
@@ -39,10 +41,6 @@ module Mithril
     def remove = puts "remove"
     def before_update = puts "before_update"
     def view = puts "view"
-
-    def html(&block)
-      Mithril::HtmlRenderer.new(self, &block).call(vnode)
-    end
 
     def self.included(base)
       $$.mithrilise(base.name, base)
