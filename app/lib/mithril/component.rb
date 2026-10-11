@@ -14,7 +14,7 @@
           instance["$vnode="](vnode);
         },
 
-        view: (vnode) => { return run("view", vnode); },
+        view: (vnode) => { return run("_view_wrapper", vnode); },
         oncreate: (vnode) => { return run("create", vnode); },
         onupdate: (vnode) => { return run("update", vnode); },
         onbeforeremove: (vnode) => { return run("before_remove", vnode); },
@@ -32,7 +32,6 @@ module Mithril
 
     def initialize(vnode)
       self.vnode = vnode
-      @output = []
     end
 
     def create = puts "create"

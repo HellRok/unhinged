@@ -3,19 +3,15 @@ module Bulma
     include Mithril::Component
 
     def view
-      html do
-        type = attrs.fetch(:type, "is-primary")
-        nav(class: "panel #{type} #{attrs[:class]}") { children }
-      end
+      type = attrs.fetch(:type, "is-primary")
+      nav(class: "panel #{type} #{attrs[:class]}") { children }
     end
 
     class Heading
       include Mithril::Component
 
       def view
-        html do
-          p(class: "panel-heading #{attrs[:class]}") { children }
-        end
+        p(class: "panel-heading #{attrs[:class]}") { children }
       end
     end
 
@@ -23,9 +19,7 @@ module Bulma
       include Mithril::Component
 
       def view
-        html do
-          div(class: "panel-block #{attrs[:class]}") { children }
-        end
+        div(class: "panel-block #{attrs[:class]}") { children }
       end
     end
   end
@@ -34,18 +28,14 @@ module Bulma
     include Mithril::Component
 
     def view
-      html do
-        nav(class: "card #{attrs[:class]}") { children }
-      end
+      nav(class: "card #{attrs[:class]}") { children }
     end
 
     class Header
       include Mithril::Component
 
       def view
-        html do
-          header(class: "card-header #{attrs[:class]}") { children }
-        end
+        header(class: "card-header #{attrs[:class]}") { children }
       end
     end
 
@@ -53,9 +43,7 @@ module Bulma
       include Mithril::Component
 
       def view
-        html do
-          div(class: "card-content #{attrs[:class]}") { children }
-        end
+        div(class: "card-content #{attrs[:class]}") { children }
       end
     end
 
@@ -63,9 +51,7 @@ module Bulma
       include Mithril::Component
 
       def view
-        html do
-          div(class: "card-footer #{attrs[:class]}") { children }
-        end
+        div(class: "card-footer #{attrs[:class]}") { children }
       end
     end
   end
@@ -74,9 +60,7 @@ module Bulma
     include Mithril::Component
 
     def view
-      html do
-        div(class: "skeleton-block #{attrs[:class]}") { children }
-      end
+      div(class: "skeleton-block #{attrs[:class]}") { children }
     end
   end
 
@@ -84,9 +68,7 @@ module Bulma
     include Mithril::Component
 
     def view
-      html do
-        div(class: "box #{attrs[:class]}") { children }
-      end
+      div(class: "box #{attrs[:class]}") { children }
     end
   end
 end

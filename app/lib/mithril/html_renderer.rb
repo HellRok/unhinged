@@ -5,7 +5,7 @@ module Mithril
       a abbr address area article aside audio b base bdi bdo blockquote body br
       button canvas caption cite code col colgroup data datalist dd del details dfn
       dialog div dl dt em embed fencedframe fieldset figcaption figure footer form
-      geolocation h1 head header hgroup hr i iframe img input ins kbd label
+      geolocation h1 head header hgroup hr html i iframe img input ins kbd label
       legend li link main map mark math menu meta meter nav noscript object ol
       optgroup option output p picture pre progress q rp rt ruby s samp script search
       section select selectedcontent slot small source span strong style sub summary
@@ -14,11 +14,15 @@ module Mithril
     ]
 
     def children
-      _output << `#{native_vnode}.children`
+      _html_output << `#{native_vnode}.children`
     end
 
-    def _output
-      @output.last
+    def _html_output
+      if @_html_depth.zero?
+        @_html_output
+      else
+        @_html_output.last
+      end
     end
 
     def m(tag, opts = {}, &block)
@@ -42,23 +46,18 @@ module Mithril
     end
 
     def tag(tag, opts, &block)
-      @depth += 1
+      @_html_depth += 1
 
       result = m(tag, opts) {
         if block_given?
-          @output << []
+          @_html_output << []
           block.call
-          @output.pop
+          @_html_output.pop
         end
       }
 
-      @depth -= 1
-
-      if @depth.zero?
-        @output << result
-      else
-        _output << result
-      end
+      @_html_depth -= 1
+      _html_output << result
     end
 
     TAGS.each { |elem|
@@ -72,16 +71,16 @@ module Mithril
     end
 
     def plain(text)
-      _output << text
+      _html_output << text
     end
 
-    def html(&block)
-      @depth = 0
-      @output = []
+    def _view_wrapper(vnode)
+      @_html_depth = 0
+      @_html_output = []
 
-      block.call
+      view(vnode)
 
-      @output
+      @_html_output
     end
   end
 end

@@ -2,23 +2,24 @@ module Mithril
   module Vnode
     class State
       def initialize(native_vnode)
-        @native_vnode = native_vnode
+        @_native_vnode = native_vnode
       end
 
       def [](key)
-        `#{@native_vnode}.state[#{key}]`
+        `#{@_native_vnode}.state[#{key}]`
       end
 
       def []=(key, value)
-        `#{@native_vnode}.state[#{key}] = #{value}`
+        `#{@_native_vnode}.state[#{key}] = #{value}`
       end
     end
 
-    attr_reader :vnode, :native_vnode
+    def vnode = @_vnode
+    def native_vnode = @_native_vnode
 
     def vnode=(val)
-      @native_vnode = val
-      @vnode = Hash.new(val)
+      @_native_vnode = val
+      @_vnode = Hash.new(val)
     end
 
     def attrs
@@ -26,7 +27,7 @@ module Mithril
     end
 
     def state
-      State.new(@native_vnode)
+      State.new(native_vnode)
     end
   end
 end
