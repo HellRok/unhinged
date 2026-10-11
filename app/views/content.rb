@@ -1,5 +1,5 @@
 class Content
-  include Mithril::Component
+  include Unhinged::Component
 
   def view
     render Nav

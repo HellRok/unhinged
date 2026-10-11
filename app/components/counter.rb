@@ -1,5 +1,5 @@
 class Counter
-  include Mithril::Component
+  include Unhinged::Component
 
   def initialize
     @count = 0

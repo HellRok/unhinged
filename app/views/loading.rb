@@ -1,5 +1,5 @@
 class Loading
-  include Mithril::Component
+  include Unhinged::Component
 
   def initialize
     @loading = true
@@ -30,7 +30,7 @@ class Loading
   def fetch_data
     @loading = true
     $$.setTimeout(-> {
-      Mithril.request(url: "/data.json").then do |response|
+      Unhinged.request(url: "/data.json").then do |response|
         @loading = false
         @data = Hash.new(response)
       end

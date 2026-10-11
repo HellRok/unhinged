@@ -1,14 +1,14 @@
 if RUBY_ENGINE == "opal"
-  require_relative "mithril/setup.js"
+  require_relative "unhinged/setup.js"
 
-  require_relative "mithril/vnode"
+  require_relative "unhinged/vnode"
 
-  require_relative "mithril/html_renderer"
-  require_relative "mithril/component"
+  require_relative "unhinged/html_renderer"
+  require_relative "unhinged/component"
 
-  require_relative "mithril/components/link"
+  require_relative "unhinged/components/link"
 
-  module Mithril
+  module Unhinged
     def self.route(elem, path, routes)
       $$.m_route(elem, path, routes.to_n)
     end

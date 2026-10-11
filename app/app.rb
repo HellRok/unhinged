@@ -1,6 +1,6 @@
 require "native"
 
-require "lib/mithril"
+require "lib/unhinged"
 
 require "components/bulma"
 require "components/counter"
@@ -13,7 +13,7 @@ require "views/loading"
 
 $$.document.addEventListener("DOMContentLoaded", -> {
   root = $$.document.getElementById("main")
-  Mithril.route(
+  Unhinged.route(
     root,
     "/",
     {

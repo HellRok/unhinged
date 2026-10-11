@@ -1,4 +1,4 @@
-module Mithril
+module Unhinged
   module Vnode
     class State
       def initialize(native_vnode)

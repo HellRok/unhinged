@@ -1,5 +1,5 @@
 %x{
-  window.mithrilise = function(name, klass) {
+  window.register_component = function(name, klass) {
     window[name] = () => {
       let instance;
 
@@ -25,24 +25,24 @@
   }
 }
 
-module Mithril
+module Unhinged
   module Component
-    include Mithril::Vnode
-    include Mithril::HtmlRenderer
+    include Unhinged::Vnode
+    include Unhinged::HtmlRenderer
 
     def initialize(vnode)
       self.vnode = vnode
     end
 
-    def create = puts "create"
-    def update = puts "update"
-    def before_remove = puts "before_remove"
-    def remove = puts "remove"
-    def before_update = puts "before_update"
-    def view = puts "view"
+    def create = nil
+    def update = nil
+    def before_remove = nil
+    def remove = nil
+    def before_update = nil
+    def view = nil
 
     def self.included(base)
-      $$.mithrilise(base.name, base)
+      $$.register_component(base.name, base)
     end
   end
 end

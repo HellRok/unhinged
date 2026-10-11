@@ -1,4 +1,4 @@
-module Mithril
+module Unhinged
   module HtmlRenderer
     # Taken from https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements
     TAGS = %w[

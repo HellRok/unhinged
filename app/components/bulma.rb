@@ -1,6 +1,6 @@
 module Bulma
   class Panel
-    include Mithril::Component
+    include Unhinged::Component
 
     def view
       type = attrs.fetch(:type, "is-primary")
@@ -8,7 +8,7 @@ module Bulma
     end
 
     class Heading
-      include Mithril::Component
+      include Unhinged::Component
 
       def view
         p(class: "panel-heading #{attrs[:class]}") { children }
@@ -16,7 +16,7 @@ module Bulma
     end
 
     class Block
-      include Mithril::Component
+      include Unhinged::Component
 
       def view
         div(class: "panel-block #{attrs[:class]}") { children }
@@ -25,14 +25,14 @@ module Bulma
   end
 
   class Card
-    include Mithril::Component
+    include Unhinged::Component
 
     def view
       nav(class: "card #{attrs[:class]}") { children }
     end
 
     class Header
-      include Mithril::Component
+      include Unhinged::Component
 
       def view
         header(class: "card-header #{attrs[:class]}") { children }
@@ -40,7 +40,7 @@ module Bulma
     end
 
     class Content
-      include Mithril::Component
+      include Unhinged::Component
 
       def view
         div(class: "card-content #{attrs[:class]}") { children }
@@ -48,7 +48,7 @@ module Bulma
     end
 
     class Footer
-      include Mithril::Component
+      include Unhinged::Component
 
       def view
         div(class: "card-footer #{attrs[:class]}") { children }
@@ -57,7 +57,7 @@ module Bulma
   end
 
   class Skeleton
-    include Mithril::Component
+    include Unhinged::Component
 
     def view
       div(class: "skeleton-block #{attrs[:class]}") { children }
@@ -65,7 +65,7 @@ module Bulma
   end
 
   class Box
-    include Mithril::Component
+    include Unhinged::Component
 
     def view
       div(class: "box #{attrs[:class]}") { children }

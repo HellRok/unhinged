@@ -1,5 +1,5 @@
 class Counters
-  include Mithril::Component
+  include Unhinged::Component
 
   def view
     render Nav

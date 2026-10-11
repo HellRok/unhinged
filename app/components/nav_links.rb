@@ -1,5 +1,5 @@
 class Nav
-  include Mithril::Component
+  include Unhinged::Component
 
   def view
     div(class: "tabs") do
@@ -13,7 +13,7 @@ class Nav
   end
 
   class Link
-    include Mithril::Component
+    include Unhinged::Component
 
     def initialize(vnode)
       super
