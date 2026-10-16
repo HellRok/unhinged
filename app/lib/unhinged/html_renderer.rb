@@ -40,8 +40,11 @@ module Unhinged
 
         $$.m(tag, flattened_opts, block.call).to_n
 
-      else
+      elsif tag.is_a?(Proc)
         $$.m(tag, opts, block.call).to_n
+
+      else
+        $$.m($$[:UnhingedInstanceComponent], { instance: tag }, block.call).to_n
       end
     end
 
@@ -67,7 +70,12 @@ module Unhinged
     }
 
     def render(klass, opts={}, &block)
-      tag($$[klass.name], opts, &block)
+      case klass
+      when Class
+        tag($$[klass.name], opts, &block)
+      else
+        tag(klass, opts, &block)
+      end
     end
 
     def plain(text)
