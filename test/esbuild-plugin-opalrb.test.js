@@ -10,6 +10,8 @@ import { fileURLToPath } from "node:url";
 
 import opalrbPlugin, {
   buildOpalArgs,
+  collectWatchDirs,
+  collectWatchFiles,
   formatOpalError,
   parseOpalError,
   runOpal,
@@ -78,6 +80,18 @@ const standardArgv = (filepath) => [
   "--compile",
   filepath,
 ];
+
+// Builds a throwaway tree on disk so watch tests can use real directories.
+const withTempTree = async (build) => {
+  const root = await fs.promises.mkdtemp(
+    path.join(os.tmpdir(), "unhinged-watch-"),
+  );
+  try {
+    return await build(root);
+  } finally {
+    await fs.promises.rm(root, { recursive: true, force: true });
+  }
+};
 
 describe("buildOpalArgs", () => {
   it("defaults to --esm and --compile", () => {
@@ -283,6 +297,85 @@ describe("runOpal", () => {
   );
 });
 
+describe("collectWatchDirs", () => {
+  it("watches the file's own directory", () => {
+    assert.deepEqual(collectWatchDirs(validRb), [path.dirname(validRb)]);
+  });
+
+  it("adds -I/--include directories", () => {
+    const included = path.join(testDir, "elsewhere");
+
+    assert.deepEqual(collectWatchDirs(validRb, ["--include", included]), [
+      path.dirname(validRb),
+      included,
+    ]);
+  });
+
+  it("dedupes directories that appear more than once", () => {
+    const dir = path.dirname(validRb);
+
+    assert.deepEqual(
+      collectWatchDirs(validRb, ["--include", dir, "-I", dir]),
+      [dir],
+      "the file's own directory is not repeated",
+    );
+  });
+
+  it("copes without a filepath", () => {
+    assert.deepEqual(collectWatchDirs(undefined, ["-I", "./app"]), [
+      path.resolve("./app"),
+    ]);
+  });
+});
+
+describe("collectWatchFiles", () => {
+  it("finds the file itself and nested Ruby files", async () => {
+    const files = await collectWatchFiles(validRb);
+    const dir = path.dirname(validRb);
+
+    assert.ok(files.includes(path.resolve(validRb)), "the entrypoint");
+    assert.ok(
+      files.includes(path.join(dir, "components", "sample.rb")),
+      "a file in a subdirectory",
+    );
+    assert.ok(
+      files.every((file) => !file.endsWith(".txt")),
+      "non-Ruby files are left out",
+    );
+  });
+
+  it("walks -I/--include directories too", async () => {
+    await withTempTree(async (root) => {
+      const app = path.join(root, "app");
+      const lib = path.join(root, "lib", "nested");
+      await fs.promises.mkdir(app, { recursive: true });
+      await fs.promises.mkdir(lib, { recursive: true });
+      await fs.promises.writeFile(path.join(app, "app.rb"), "");
+      await fs.promises.writeFile(path.join(lib, "deep.opal"), "");
+      await fs.promises.writeFile(path.join(root, "lib", "notes.txt"), "");
+
+      const entry = path.join(app, "app.rb");
+      const files = await collectWatchFiles(entry, ["--include", root]);
+
+      assert.deepEqual(
+        files.sort(),
+        [entry, path.join(lib, "deep.opal")].sort(),
+      );
+    });
+  });
+
+  it("ignores include directories that do not exist", async () => {
+    const missing = path.join(testDir, "definitely-not-here");
+    const files = await collectWatchFiles(validRb, ["--include", missing]);
+
+    assert.ok(files.includes(path.resolve(validRb)));
+    assert.ok(
+      files.every((file) => !file.startsWith(missing)),
+      "nothing is invented for a missing directory",
+    );
+  });
+});
+
 describe("opalrbPlugin", () => {
   it("registers an onLoad handler for .rb files", () => {
     let captured = null;
@@ -309,6 +402,23 @@ describe("opalrbPlugin", () => {
       assert.match(error.text, /`bundle` could not be found/);
       assert.match(error.text, /bundle install/);
       assert.match(error.notes[0].text, /Command: bundle exec opal/);
+    } finally {
+      process.env.PATH = originalPath;
+    }
+  });
+
+  it("watches the Ruby tree even when opal is missing", async () => {
+    const originalPath = process.env.PATH;
+    process.env.PATH = "/unhinged-nowhere";
+
+    try {
+      const { result } = await loadFile(validRb);
+
+      assert.ok(
+        result.watchFiles.includes(path.resolve(validRb)),
+        "the file is still watched",
+      );
+      assert.deepEqual(result.watchDirs, [path.dirname(validRb)]);
     } finally {
       process.env.PATH = originalPath;
     }
@@ -456,6 +566,48 @@ describe("opalrbPlugin with opal", () => {
         `resolved to ${error.location.file}`,
       );
       assert.ok(path.isAbsolute(error.location.file));
+    },
+  );
+
+  it(
+    "watches every Ruby file in the load paths on success",
+    { skip: withoutOpal },
+    async () => {
+      const { result } = await loadFile(validRb, {
+        extraArgs: ["--include", "./test/fixtures"],
+      });
+      const included = path.resolve("./test/fixtures");
+
+      assert.equal(result.errors, undefined, "the build succeeded");
+      assert.ok(
+        result.watchFiles.includes(
+          path.join(included, "components", "sample.rb"),
+        ),
+        "a required file is watched",
+      );
+      assert.deepEqual(
+        result.watchDirs,
+        [path.dirname(validRb)],
+        "the file's directory and the include directory are the same",
+      );
+    },
+  );
+
+  it(
+    "watches required files even when the compile fails",
+    { skip: withoutOpal },
+    async () => {
+      const { result } = await loadFile(requiresSampleRb, {
+        extraArgs: ["--include", "test/fixtures"],
+      });
+
+      assert.ok(result.errors?.length, "the fixture fails to compile");
+      assert.ok(
+        result.watchFiles.includes(
+          path.resolve("test/fixtures/components/sample.rb"),
+        ),
+        "the file that needs fixing is watched",
+      );
     },
   );
 });
