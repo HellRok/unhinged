@@ -30,14 +30,11 @@
 %x{
   (() => {
     const run = (method, vnode) => {
-      vnode.state.instance["$vnode="](vnode);
-      return vnode.state.instance[`$${method}`]();
+      vnode.attrs.instance["$vnode="](vnode);
+      return vnode.attrs.instance[`$${method}`]();
     };
 
     window.UnhingedInstanceComponent = {
-      oninit: (vnode) => {
-        vnode.state.instance = vnode.attrs.instance;
-      },
       view: (vnode) => { return run("_view_wrapper", vnode); },
       oncreate: (vnode) => { return run("create", vnode); },
       onupdate: (vnode) => { return run("update", vnode); },

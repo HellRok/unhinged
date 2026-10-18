@@ -71,4 +71,12 @@ module Bulma
       div(class: "box #{attrs[:class]}") { children }
     end
   end
+
+  class Block
+    include Unhinged::Component
+
+    def view
+      div(class: "block #{attrs[:class]}") { children }
+    end
+  end
 end
