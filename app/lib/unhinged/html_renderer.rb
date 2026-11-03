@@ -82,6 +82,10 @@ module Unhinged
       _html_output << text
     end
 
+    def raw(html)
+      _html_output << $$.m_trust(html)
+    end
+
     def _view_wrapper(vnode)
       @_html_depth = 0
       @_html_output = []

@@ -19,6 +19,16 @@ class Content
       end
     end
 
+    render Bulma::Panel do
+      render Bulma::Panel::Heading, class: "has-text-centered" do
+        plain "Raw HTML"
+      end
+
+      render Bulma::Panel::Block do
+        raw "<marquee>Marquee text!</marquee>"
+      end
+    end
+
     render Bulma::Card do
       render Bulma::Card::Content, class: "content" do
         h1 { plain "Example Content" }
